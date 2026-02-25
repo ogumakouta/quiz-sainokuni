@@ -20,4 +20,4 @@ COPY . .
 # コンテナ起動時に entrypoint.sh を実行するよう設定
 ENTRYPOINT ["/app/entrypoint.sh"]
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "${PORT}", "--reload"]
