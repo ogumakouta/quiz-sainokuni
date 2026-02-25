@@ -1,11 +1,14 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from urllib.parse import urlparse
 
 
 # .envから環境変数を読み込む
 DATABASE_URL = os.environ['DATABASE_URL']
 USE_SSL = os.getenv('USE_SSL', 'False').lower() == 'true'
+
+print(f"DEBUG: Hostname is {urlparse(DATABASE_URL).hostname}")
 
 connect_args = {}
 
