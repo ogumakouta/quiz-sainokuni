@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 # ルーターをインポート
 from app.routers import auth, question, interest, spot, user
@@ -8,9 +9,9 @@ from app.routers import auth, question, interest, spot, user
 app = FastAPI(root_path='/api')
 
 # CORSの設定
-origins = [
-    "http://localhost:3000", # Next.jsのURL
-]
+raw_origins = os.getenv("ALLOWED_ORIGINS", "http://localhost:3000")
+
+origins = [origin.strip() for origin in raw_origins.split(",")]
 
 app.add_middleware(
     CORSMiddleware,
