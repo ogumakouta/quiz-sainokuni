@@ -1,15 +1,27 @@
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from urllib.parse import urlparse
 
 
-# .envからDATABASE_URLを読み込む
+# .envから環境変数を読み込む
 DATABASE_URL = os.environ['DATABASE_URL']
+USE_SSL = os.getenv('USE_SSL', 'False').lower() == 'true'
+
+print(f"DEBUG: Hostname is {urlparse(DATABASE_URL).hostname}")
+
+connect_args = {}
+
+# 本番の時(USE_SSL = Trueの時)だけCA Certificateを使う
+if USE_SSL:
+    connect_args['ssl'] = {
+        'ca': './ca.pem'
+    }
 
 
 engine = create_engine(
     DATABASE_URL,
-    connect_args={"charset": "utf8mb4"}
+    connect_args=connect_args
 )
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

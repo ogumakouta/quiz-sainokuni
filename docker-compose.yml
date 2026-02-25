@@ -30,6 +30,8 @@ services:
       - ./backend:/app
     environment:
       DATABASE_URL: ${DATABASE_URL}
+      USE_SSL: ${USE_SSL}
+      PORT: ${PORT}
       DB_HOST: db
       DB_PORT: 3306
       TZ: Asia/Tokyo
